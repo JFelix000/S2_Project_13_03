@@ -7,8 +7,8 @@
 
    Crossword Puzzle Script
    
-   Author: 
-   Date:   
+   Author: Jose Felix
+   Date:   3.26.19
    
    Global Variables
    ================
@@ -48,9 +48,27 @@
 
 
 */
+// declaring all of the values with nothing specific at the moment
+var allLetters;
+var currentLetter;
+var wordLetters;
+var acrossClue;
+var downClue;
+var typeDirection;
+// as the page starts it loads the init function here
+window.onload = init;
+// this is the function that is run when the page loads from the code above
+function init() {
+      allLetters = document.querySelectorAll("table#crossword span");
+      currentLetter = allLetters[0];
+      var acrossID = currentLetter.getAttribute("data-clue-a");
+      var downID = currentLetter.getAttribute("data-clue-d");
+      acrossClue.value = document.getElementById("acrossID");
+      downClue.value = document.getElementById("downID");
+}
+function formatPuzzle() {
 
-
-
+}
 
 
    
