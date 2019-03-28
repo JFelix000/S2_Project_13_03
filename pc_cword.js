@@ -57,6 +57,7 @@ var downClue;
 var typeDirection;
 // as the page starts it loads the init function here
 window.onload = init;
+window.onload = alert("I got code done... \nbut it is not complete");
 // this is the function that is run when the page loads from the code above
 function init() {
       allLetters = document.querySelectorAll("table#crossword span");
@@ -65,13 +66,39 @@ function init() {
       var downID = currentLetter.getAttribute("data-clue-d");
       acrossClue.value = document.getElementById("acrossID");
       downClue.value = document.getElementById("downID");
+      return formatPuzzle(currentLetter);
+
+      for (var i = 0; i < allLetters.length; i++) {
+            cursor.style[i];
+      }
 }
 function formatPuzzle() {
-
+      currentLetter.value = puzzleLetter;
+      for (var i = 0; i < allLetters.length; i++) {
+            allLetters[i].style.background = "";
+      }
+      acrossClue.style.color= "";
+      downClue.style.color= "";
+      if (currentLetter.dataset.clueA != undefined) {
+            acrossClue == currentLetter.dataset.clueA;
+            acrossClue.style.color = "blue";
+            wordLetters = document.querySelectorAll("[data-clue-A = " + currentLetter.dataset.clueA + "]");
+            wordLetters[i].style.backgroundColor = "rgb(231, 231, 255)";
+      }
+      if (currentLetter.dataset.clueD != undefined) {
+            acrossClue == currentLetter.dataset.clueD;
+            acrossClue.style.color = "red";
+            wordLetters = document.querySelectorAll("[data-clue-D = " + currentLetter.dataset.clueD + "]");
+            wordLetters[i].style.backgroundColor = "rgb(255, 231, 231)";
+      }
+      if (typeDirection == "right") {
+            currentLetter.backgroundColor = "rgb(191, 191, 255)";
+      } else {
+            cuurentLetter.backgrundColor = "rgb(255, 191, 191)";
+      }
 }
 
 
-   
 
 
 
