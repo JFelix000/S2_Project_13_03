@@ -54,53 +54,120 @@ var currentLetter;
 var wordLetters;
 var acrossClue;
 var downClue;
-var typeDirection;
+var typeDirection = "right";
 // as the page starts it loads the init function here
 window.onload = init;
-window.onload = alert("I got code done... \nbut it is not complete");
 // this is the function that is run when the page loads from the code above
 function init() {
       allLetters = document.querySelectorAll("table#crossword span");
       currentLetter = allLetters[0];
-      var acrossID = currentLetter.getAttribute("data-clue-a");
-      var downID = currentLetter.getAttribute("data-clue-d");
-      acrossClue.value = document.getElementById("acrossID");
-      downClue.value = document.getElementById("downID");
-      return formatPuzzle(currentLetter);
+
+      var acrossID = currentLetter.dataset.clueA.value;
+      var downID = currentLetter.dataset.clueD.value;
+
+      acrossClue = document.getElementById(currentLetter.dataset.clueA);
+      downClue = document.getElementById(currentLetter.dataset.clueD);
+
+      formatPuzzle(currentLetter);
 
       for (var i = 0; i < allLetters.length; i++) {
-            cursor.style[i];
+            allLetters[i].style.cursor = "pointer";
+            allLetters[i].onmousedown = function (e) {
+                  formatPuzzle(e.target);
+            };
+            
       }
+      document.onkeydown = selectLetter;
+
+      var typeImage = document.getElementById("directionImg");
+      typeImage.style.cursor = "pointer";
+      typeImage.onclick = switchTypeDirection;
+      document.addEventListener("click", function () {
+            for (var i = 0; i < allLetters.length; i++){
+                 if (textContent !== dataset.letter) {
+                  allLetter[i].style.color = "red";
+                 }
+                 setInterval(allLetters[i], 3000)
+            }
+      })
 }
-function formatPuzzle() {
-      currentLetter.value = puzzleLetter;
+function formatPuzzle(puzzleLetter) {
+      currentLetter = puzzleLetter;
+
       for (var i = 0; i < allLetters.length; i++) {
             allLetters[i].style.background = "";
       }
       acrossClue.style.color= "";
       downClue.style.color= "";
-      if (currentLetter.dataset.clueA != undefined) {
-            acrossClue == currentLetter.dataset.clueA;
+
+      if (currentLetter.dataset.clueA !== undefined) {
+            acrossClue = document.getElementById(currentLetter.dataset.clueA);
             acrossClue.style.color = "blue";
-            wordLetters = document.querySelectorAll("[data-clue-A = " + currentLetter.dataset.clueA + "]");
-            wordLetters[i].style.backgroundColor = "rgb(231, 231, 255)";
+            wordLetters = document.querySelectorAll("[data-clue-a = " + currentLetter.dataset.clueA + "]");
+            for (var i = 0; i < wordLetters.length; i++) {
+                  wordLetters[i].style.backgroundColor = "rgb(231, 231, 255)";
+            }
       }
-      if (currentLetter.dataset.clueD != undefined) {
-            acrossClue == currentLetter.dataset.clueD;
-            acrossClue.style.color = "red";
-            wordLetters = document.querySelectorAll("[data-clue-D = " + currentLetter.dataset.clueD + "]");
-            wordLetters[i].style.backgroundColor = "rgb(255, 231, 231)";
+
+      if (currentLetter.dataset.clueD !== undefined) {
+            downClue = document.getElementById(currentLetter.dataset.clueD);
+            downClue.style.color = "red";
+            wordLetters = document.querySelectorAll("[data-clue-d = " + currentLetter.dataset.clueD + "]");
+            for (var i = 0; i < wordLetters.length; i++) {
+                  wordLetters[i].style.backgroundColor = "rgb(255, 231, 231)";
+            }
       }
-      if (typeDirection == "right") {
-            currentLetter.backgroundColor = "rgb(191, 191, 255)";
+      if (typeDirection === "right") {
+            currentLetter.style.backgroundColor = "rgb(191, 191, 255)";
       } else {
-            cuurentLetter.backgrundColor = "rgb(255, 191, 191)";
+            currentLetter.style.backgroundColor = "rgb(255, 191, 191)";
       }
 }
 
+function selectLetter(e) {
+      // these are for every direction of the code selected
+      var leftLetter = document.getElementById(currentLetter.dataset.left);
+      var upLetter = document.getElementById(currentLetter.dataset.up);
+      var rightLetter = document.getElementById(currentLetter.dataset.right);
+      var downLetter = document.getElementById(currentLetter.dataset.down);
+      
+      var userKey = e.keyCode;
+      
+      if (userKey == 37) {
+            formatPuzzle(leftLetter);
+      } else if (userKey === 38) {
+            formatPuzzle(upLetter);
+      } else if (userKey === 39 || userKey === 9) {
+            formatPuzzle(rightLetter);
+      } else if (userKey === 40 || userKey === 13) {
+            formatPuzzle(downLetter);
+      } else if (userKey === 8 || userKey === 46) {
+            currentLetter.textContent = "";
+      } else if (userKey === 32) {
+            switchTypeDirection();
+      } else if (userKey >= 65 && userKey <= 90) {
+            currentLetter.textContent = getChar(userKey);
+            if (typeDirection === "right") {
+                  formatPuzzle(rightLetter);
+            } else {
+                  formatPuzzle(downLetter);
+            }
+      }
+      e.preventDefault();
+}
 
-
-
+function switchTypeDirection () {
+      var typeImage = document.getElementById("directionImg");
+      if (typeDirection == "right") {
+            typeDirection = "down";
+            typeImage.src = "pc_down.png";
+            currentLetter.style.backgroundColor = "rgb(255, 191, 191)";
+      } else {
+            typeDirection = "right";
+            typeImage.src = "pc_down.png";
+            currentLetter.style.backgroundColor = "rgb(191, 191, 255)";
+      }
+}
 
 
 
